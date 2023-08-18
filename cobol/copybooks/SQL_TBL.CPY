@@ -8,7 +8,7 @@
        01 DCL_SQL_TBL_NUM_1     PIC X(3).
        01 DCL_SQL_TBL_NUM_2     PIC X(3).
 
-      * SQL SELECT
+      * SQL SELECT from SQL_TBL
        EXEC SQL
            SELECT NUM_1
            INTO :DCL_SQL_TBL_NUM_1
@@ -36,11 +36,18 @@
            WHERE NUM_1 = :DCL_SQL_TBL_NUM_1
        END-EXEC.
 
-      * Create cursor for table 2
+      * Create cursor for SQL_TBL
        EXEC SQL
            DECLARE CURSOR_FROM_SQL_TBL CURSOR FOR
            SELECT NUM_1,
                   NUM_2
            FROM SQL_TBL
            FOR FETCH ONLY
+       END-EXEC.
+
+      * SQL SELECT from CURSOR_FROM_SQL_TBL
+       EXEC SQL
+           SELECT NUM_1
+           INTO :DCL_SQL_TBL_NUM_1
+           FROM CURSOR_FROM_SQL_TBL
        END-EXEC.
